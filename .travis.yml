@@ -5,9 +5,10 @@ services:
 
 env:
   matrix:
-  - PROTOC_VERSION=3.11.2
+  - PROTOC_VERSION=3.11.2 LATEST=true
   
 before_install:
   - docker build -t automatizer/gradle-protoc:$PROTOC_VERSION .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push automatizer/gradle-protoc:$PROTOC_VERSION
+  - if [ -z ${var+x} ]; then docker tag automatizer/gradle-protoc:$PROTOC_VERSION automatizer/gradle-protoc:latest && docker push automatizer/gradle-protoc:latest; fi
