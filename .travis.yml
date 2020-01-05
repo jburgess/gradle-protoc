@@ -8,7 +8,7 @@ env:
   - PROTOC_VERSION=3.11.2 LATEST=true
   
 before_install:
-  - docker build -t automatizer/gradle-protoc:$PROTOC_VERSION .
+  - docker build -t $DOCKER_REPOSITORY:$PROTOC_VERSION .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push automatizer/gradle-protoc:$PROTOC_VERSION
-  - if [[ $LATEST == "true" ]]; then docker tag automatizer/gradle-protoc:$PROTOC_VERSION automatizer/gradle-protoc:latest && docker push automatizer/gradle-protoc:latest; fi
+  - docker push $DOCKER_REPOSITORY:$PROTOC_VERSION
+  - if [[ $LATEST == "true" ]]; then docker tag $DOCKER_REPOSITORY:$PROTOC_VERSION $DOCKER_REPOSITORY:latest && docker push $DOCKER_REPOSITORY:latest; fi
